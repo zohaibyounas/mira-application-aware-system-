@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mira Engineering | Readiness & Safety Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #2563eb;
+            --industrial-navy: #0f172a;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f1f5f9;
+            color: #0f172a;
+            background-image: 
+                radial-gradient(#cbd5e1 0.5px, transparent 0.5px),
+                radial-gradient(#cbd5e1 0.5px, #f1f5f9 0.5px);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+        }
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .blueprint-bg {
+            background-color: #ffffff;
+            background-image: linear-gradient(#f8fafc 1px, transparent 1px), linear-gradient(90deg, #f8fafc 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        /* Watermark for Print */
+        .watermark {
+            display: none;
+        }
+
+        @media print {
+            body {
+                background-color: white !important;
+                background-image: none !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .card {
+                border: 2px solid #0f172a !important;
+                box-shadow: none !important;
+                break-inside: avoid;
+                margin-bottom: 2rem;
+                border-radius: 0 !important;
+            }
+            .watermark {
+                display: block;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%) rotate(-45deg);
+                font-size: 150px;
+                color: rgba(37, 99, 235, 0.03) !important;
+                font-weight: 900;
+                pointer-events: none;
+                z-index: -100;
+                white-space: nowrap;
+            }
+            @page {
+                margin: 1cm;
+                size: A4;
+            }
+            pre {
+                white-space: pre-wrap !important;
+                word-break: break-all !important;
+            }
+        }
+
+        /* Custom UI Elements */
+        .scanline {
+            width: 100%;
+            height: 2px;
+            background: rgba(37, 99, 235, 0.1);
+            position: absolute;
+            animation: scan 4s linear infinite;
+        }
+        @keyframes scan {
+            from { top: 0; }
+            to { top: 100%; }
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.34.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body>
+    <div id="root"></div>
+    <div class="watermark" aria-hidden="true">ENGINEERING DRAFT</div>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
