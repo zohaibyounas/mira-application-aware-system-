@@ -29,7 +29,7 @@ const Header: React.FC = () => (
         </div>
         <div>
           <h1 className="font-black text-white leading-none tracking-tighter text-2xl">
-            MIRA <span className="text-blue-500">READY</span>
+            Mira <span className="text-blue-500">Elektronikentwicklung</span>
           </h1>
           <p className="text-[10px] text-blue-500/80 font-black tracking-[0.2em] uppercase mt-1">
             Readiness & Safety Validation
