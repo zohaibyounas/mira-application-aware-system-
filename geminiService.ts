@@ -1,8 +1,7 @@
-
 import { GoogleGenAI, Type } from "@google/genai";
 import { AnalysisResult, ApplicationType } from "./types";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || "" });
 
 const SYSTEM_INSTRUCTION = `You are a Senior Embedded Safety Engineer at Mira Elektronikentwicklung.
 Your role is to analyze incomplete system descriptions and identify missing requirements, assumptions, and risks.
@@ -63,7 +62,11 @@ const RESPONSE_SCHEMA = {
         vagueSpecifications: { type: Type.ARRAY, items: GAP_DETAIL_SCHEMA },
         dangerousAssumptions: { type: Type.ARRAY, items: GAP_DETAIL_SCHEMA },
       },
-      required: ["missingTopics", "vagueSpecifications", "dangerousAssumptions"],
+      required: [
+        "missingTopics",
+        "vagueSpecifications",
+        "dangerousAssumptions",
+      ],
     },
     artifacts: {
       type: Type.ARRAY,
@@ -82,10 +85,12 @@ const RESPONSE_SCHEMA = {
   required: ["profile", "gaps", "artifacts"],
 };
 
-export const analyzeSystemDescription = async (userInput: string): Promise<AnalysisResult> => {
+export const analyzeSystemDescription = async (
+  userInput: string
+): Promise<AnalysisResult> => {
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-3-flash-preview",
+      model: "gemini-2.5-flash",
       contents: `Analyze this system description: "${userInput}"`,
       config: {
         systemInstruction: SYSTEM_INSTRUCTION,
@@ -94,19 +99,21 @@ export const analyzeSystemDescription = async (userInput: string): Promise<Analy
       },
     });
 
-    const text = response.text || '{}';
+    const text = response.text || "{}";
     const result = JSON.parse(text) as any;
-    
+
     let type = ApplicationType.GENERIC_EMBEDDED;
-    if (result.profile.type.toLowerCase().includes('bms')) type = ApplicationType.BMS;
-    else if (result.profile.type.toLowerCase().includes('motor')) type = ApplicationType.MOTOR_CONTROL;
+    if (result.profile.type.toLowerCase().includes("bms"))
+      type = ApplicationType.BMS;
+    else if (result.profile.type.toLowerCase().includes("motor"))
+      type = ApplicationType.MOTOR_CONTROL;
 
     return {
       ...result,
       profile: {
         ...result.profile,
-        type
-      }
+        type,
+      },
     };
   } catch (error) {
     console.error("Analysis failed:", error);
